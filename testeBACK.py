@@ -7,12 +7,12 @@ from Back.services.dataTRANS2 import transform_game_data
 from Back.services.recommendations import convert_predictions_to_recommendations
 
 # Carregar o modelo e o scaler
-model = joblib.load("path_para_o_modelo/best_model(2).pkl")
-scaler = joblib.load("path_para_o_scaler/scaler.pkl")
+model = joblib.load("D:/ProjetoMLeague/MLeague/data/ML/best_model(NOVO).pkl")
+scaler = joblib.load("D:/ProjetoMLeague/MLeague/data/ML/scaler(NOVO).pkl")
 
 
 # Substitua pela sua chave de API da Riot
-API_KEY = "SUA_CHAVE_API_RIOT"
+API_KEY = "API RIOT"
 
 # Função para obter o PUUID a partir do nome de invocador usando a API da Riot
 def get_puuid_by_summoner_name(summoner_name, region):

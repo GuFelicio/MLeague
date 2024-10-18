@@ -1,0 +1,297 @@
+Documentação do Backend
+
+Visão Geral
+Este backend foi desenvolvido utilizando FastAPI para fornecer uma API rápida e eficiente que interage com a API da
+Riot Games e um modelo de Machine Learning para gerar recomendações em tempo real durante partidas de League of Legends.
+O backend é responsável pela autenticação dos usuários, captura de dados de partidas, processamento desses dados, e geração
+de recomendações baseadas em um modelo de ML treinado.
+
+
+
+Funcionalidades Principais
+
+
+Autenticação de Usuário: O backend permite login utilizando o nome de invocador (Summoner Name) e autentica o usuário via JWT.
+
+Captura de Dados de Partida: Usamos a API da Riot para capturar o PUUID do jogador e os dados de partidas em tempo real.
+
+Processamento de Dados: Após a captura, os dados são transformados e normalizados para serem usados no modelo de ML.
+
+Recomendações em Tempo Real: Com base nos dados processados, o modelo de Machine Learning gera recomendações sobre o que fazer durante a partida.
+
+
+
+Endpoints Disponíveis
+
+1. Autenticação
+
+POST /token
+Descrição: Endpoint para login e geração de token JWT.
+Entrada: Requisição com username (nome de usuário) e password (senha).
+Saída: Um token JWT usado para autenticar o usuário e realizar outras requisições.
+Exemplo de Requisição:
+
+POST /token
+{
+  "username": "meu_usuario",
+  "password": "minha_senha"
+}
+
+Resposta:
+json
+Copiar código
+{
+  "access_token": "token_jwt_gerado",
+  "token_type": "bearer"
+}
+
+
+
+2. Atualização de PUUID
+
+POST /game/update_puuid
+Descrição: Atualiza o PUUID do jogador logado, associando-o ao usuário autenticado.
+Entrada: Nome de invocador e região.
+Autenticação: Token JWT necessário.
+Exemplo de Requisição:
+
+POST /game/update_puuid
+Headers:
+{
+  "Authorization": "Bearer <token_jwt>"
+}
+Body:
+{
+  "summoner_name": "SummonerName",
+  "region": "br1"
+}
+
+
+Resposta:
+json
+Copiar código
+{
+  "message": "PUUID atualizado com sucesso!"
+}
+
+
+3. Captura de Dados de Partida
+
+GET /game/current
+Descrição: Captura os dados da partida atual do jogador logado, usando o PUUID.
+Autenticação: Token JWT necessário.
+Exemplo de Requisição:
+
+GET /game/current
+Headers:
+{
+  "Authorization": "Bearer <token_jwt>"
+}
+
+Resposta:
+
+{
+  "game_id": "ID_da_partida",
+  "game_data": {
+    "champions": {...},
+    "kills": {...},
+    "deaths": {...},
+    "assists": {...},
+    ...
+  }
+}
+
+
+4. Geração de Recomendações
+
+POST /recommendations
+Descrição: Gera recomendações com base nos dados da partida em tempo real.
+Entrada: Dados de uma partida.
+Autenticação: Token JWT necessário.
+Exemplo de Requisição:
+
+
+POST /recommendations
+Headers:
+{
+  "Authorization": "Bearer <token_jwt>"
+}
+Body:
+{
+  "game_data": {
+    "champions": {...},
+    "kills": {...},
+    "deaths": {...},
+    "assists": {...}
+  }
+}
+
+Resposta:
+
+
+{
+  "recommendations": [
+    "Atacar o Dragão",
+    "Focar em visão e warding"
+  ]
+}
+
+
+Fluxo de Autenticação e Captura de PUUID
+Login e Autenticação:
+
+O usuário faz login usando seu nome de usuário e senha.
+Um token JWT é gerado e enviado como resposta.
+Captura do PUUID:
+
+O nome de invocador e a região do jogador são enviados ao backend.
+O backend utiliza a API da Riot para obter o PUUID correspondente ao jogador.
+
+
+
+Uso do PUUID:
+
+> O PUUID capturado é salvo no banco de dados para associar o jogador autenticado à sua conta na Riot Games.
+> Modelo de Machine Learning
+> Funcionamento do Modelo
+> O modelo de ML foi treinado para prever ações durante a partida, como "Atacar o inimigo", "Focar em visão e warding", "Atacar o Dragão", etc.
+> Os dados da partida são coletados da API da Riot, transformados e normalizados antes de serem usados no modelo.
+> O modelo faz predições baseadas nas features da partida (kills, deaths, assists, goldEarned, etc.) e retorna recomendações para o jogador.
+
+
+Integração com o Frontend
+
+
+> Requisições: O frontend deve realizar chamadas autenticadas para os endpoints mencionados acima, utilizando o token JWT.
+> Exibição das Recomendações: O frontend deve exibir as recomendações de maneira intuitiva, com base nas ações sugeridas pelo backend.
+
+
+Banco de Dados
+
+
+>Estrutura do Banco
+    Tabela players: Armazena os dados dos jogadores, como nome de invocador, PUUID, região, etc.
+    Tabela matches: Armazena os dados das partidas, como ID da partida, kills, deaths, assists, duração, etc.
+    Tabela recommendations: Armazena as recomendações feitas durante cada partida, associando-as ao PUUID do jogador e à partida.
+
+
+Exemplo de Fluxo Completo
+
+
+> O jogador faz login e recebe um token JWT.
+> O jogador entra com seu nome de invocador, e o backend captura o PUUID.
+> Durante uma partida, o frontend faz requisições ao backend para capturar os dados da partida.
+> O backend processa esses dados e utiliza o modelo de ML para gerar recomendações.
+> O frontend exibe as recomendações em tempo real ao jogador.
+
+
+
+Detalhamento das Funções do Backend
+
+
+Visão Geral
+Essa seção descreve todas as funções criadas no backend, detalhando como cada uma delas funciona e como podem ser utilizada
+pelo frontend. Com essas funções, o frontend poderá interagir com a API para fornecer uma experiência completa para o usuário,
+incluindo login, captura de dados e geração de recomendações em tempo real.
+
+1. Funções de Autenticação
+    
+    create_access_token
+        Descrição: Gera o token JWT para autenticar o usuário após o login.
+    Parâmetros:
+        data: Dicionário contendo as informações do usuário (ex: {"sub": "username"}).
+        Saída: Retorna um JWT token que pode ser utilizado para autenticação nas requisições subsequentes.
+        Função usada em: Endpoint /token para gerar o token de login.
+    
+    get_current_user
+        Descrição: Recupera o usuário autenticado a partir do token JWT passado no header da requisição.
+    Parâmetros:
+        token: Token JWT passado no header da requisição.
+        db: Sessão do banco de dados.
+        Saída: Retorna o usuário autenticado se o token JWT for válido, ou gera um erro 401 se não for.
+        Função usada em: Todas as rotas que exigem autenticação, como /game/current e /recommendations.
+
+
+2. Funções Relacionadas ao Jogo
+    
+    get_puuid_by_summoner_name
+        Descrição: Faz uma chamada à API da Riot Games para obter o PUUID de um jogador com base no nome de invocador e na região.
+    Parâmetros:
+        summoner_name: Nome de invocador do jogador.
+        region: Região do jogador (ex: br1).
+        Saída: Retorna o PUUID do jogador.
+        Função usada em: Endpoint /game/update_puuid para capturar o PUUID de um jogador.
+    
+    get_current_game_data
+        Descrição: Captura os dados da partida em andamento para um jogador, com base no PUUID. Usa a API da Riot Games.
+    Parâmetros:
+        puuid: O PUUID do jogador cujos dados da partida serão capturados.
+        Saída: Retorna os dados da partida em andamento em formato JSON, incluindo kills, deaths, assists, champions, etc.
+        Função usada em: Endpoint /game/current para capturar os dados de uma partida em tempo real.
+
+
+3. Funções de Processamento de Dados
+    
+    transform_game_data
+        Descrição: Transforma e normaliza os dados capturados da partida para serem usados no modelo de Machine Learning.
+    Parâmetros:
+        game_data: Dados brutos da partida, retornados pela API da Riot.
+        puuid: O PUUID do jogador cujos dados estão sendo transformados.
+        Saída: Retorna os dados transformados e prontos para serem processados pelo modelo de Machine Learning.
+        Função usada em: Pipeline de processamento antes da geração de recomendações.
+
+
+4. Funções de Recomendações
+    
+    convert_predictions_to_recommendations
+        Descrição: Converte as predições feitas pelo modelo de Machine Learning em recomendações específicas de ações no jogo
+        (ex: "Atacar o Dragão", "Focar em visão e warding").
+    Parâmetros:
+        predictions: As predições feitas pelo modelo de Machine Learning.
+        Saída: Retorna uma lista de recomendações baseadas nas predições.
+        Função usada em: Endpoint /recommendations para fornecer recomendações ao jogador.
+
+
+Pipeline de Machine Learning
+    Além das funções de predição, a API utiliza um modelo de Machine Learning treinado para prever as melhores ações para o
+    jogador durante uma partida. As predições são baseadas em várias features capturadas da partida (kills, deaths, assists, etc.),
+    e o modelo gera recomendações que são enviadas para o frontend em tempo real.
+
+
+5. Funções de Banco de Dados
+
+    update_puuid
+        Descrição: Atualiza o PUUID do jogador autenticado no banco de dados.
+    Parâmetros:
+        puuid_data: Dados do PUUID fornecidos pelo jogador.
+        db: Sessão do banco de dados.
+        user_authenticated: O usuário atualmente autenticado.
+        Saída: Atualiza o PUUID do jogador no banco de dados.
+        Função usada em: Endpoint /game/update_puuid.
+
+    get_db
+        Descrição: Função responsável por fornecer a sessão do banco de dados para todas as interações com o banco.
+    Parâmetros: Nenhum diretamente, mas é usada como Depends para injetar a sessão do banco.
+        Saída: Retorna a sessão do banco de dados para que possa ser usada em queries e commits.
+        Função usada em: Todas as funções que interagem com o banco de dados.
+
+Como o Frontend Pode Usar as Funções
+    Fluxo Completo de Requisições
+        Login:
+            O frontend deve chamar o endpoint /token para obter o token JWT com base no nome de usuário e senha.
+        
+        Captura de PUUID:
+            Após o login, o frontend envia uma requisição ao endpoint /game/update_puuid com o nome de invocador e a
+            região do jogador. O backend então captura o PUUID e associa ao jogador autenticado.
+        
+        Captura de Dados de Partida:
+            Durante o jogo, o frontend pode capturar os dados da partida em andamento chamando o endpoint /game/current.
+            Esses dados serão processados no backend e usados para gerar as predições.
+        
+        Geração de Recomendações:
+            O frontend pode solicitar recomendações chamando o endpoint /recommendations, enviando os dados da partida em andamento.
+            O backend retornará uma lista de recomendações com base no modelo de Machine Learning.
+        
+        Utilização dos Tokens JWT:
+            Todas as requisições que envolvem dados do jogo e recomendações precisam de autenticação. O token JWT, obtido no login,
+            deve ser enviado no header Authorization em todas as requisições subsequentes.
