@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Carregar os dados transformados do CSV
-data_path = r"F:\Devs\helpNBlol\match_details_transformed.csv"
+data_path = r".\data\CSV\match_details_transformed.csv"
 data = pd.read_csv(data_path)
 
 # Exibir as primeiras linhas para entender a estrutura

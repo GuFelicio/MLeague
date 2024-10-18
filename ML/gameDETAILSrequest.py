@@ -8,7 +8,7 @@ API_KEY = 'RGAPI-a8e188a1-e9df-4fb3-bc2a-6a5c4a9fb490'
 BASE_URL = 'https://americas.api.riotgames.com'
 
 # Configuração de Armazenamento
-LOCAL_STORAGE_PATH = r"D:\NBHelp\noobHelp\venv\data\jSON"  # Caminho de armazenamento local
+LOCAL_STORAGE_PATH = r".\data\jSON"  # Caminho de armazenamento local
 
 # Configuração de conexão com o banco de dados MySQL
 db = mysql.connector.connect(

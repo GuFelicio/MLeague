@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Caminho do arquivo CSV gerado anteriormente
-data_path = r"D:\NBHelp\noobHelp\venv\data\CSV\match_details_processed.csv"
+data_path = r".\data\CSV\match_details_processed.csv"
 data = pd.read_csv(data_path, low_memory=False)
 
 # Função para determinar o resultado do jogador com base nos dados processados
@@ -23,6 +23,6 @@ if 'game_gameDuration' not in data.columns:
 print(data[['participant_summonerName', 'gameResult', 'game_gameDuration']].head())
 
 # Salvar os dados transformados em um novo arquivo CSV
-output_path = r"D:\NBHelp\noobHelp\venv\data\CSV\match_details_results.csv"
+output_path = r".\data\CSV\match_details_results.csv"
 data.to_csv(output_path, index=False)
 print(f"Dados com resultados e duração do jogo armazenados em {output_path}")

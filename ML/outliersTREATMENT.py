@@ -3,7 +3,7 @@ import os
 import json
 
 # Caminho da pasta onde os arquivos JSON estão armazenados
-LOCAL_STORAGE_PATH = r"D:\NBHelp\noobHelp\venv\data\jSON"
+LOCAL_STORAGE_PATH = r".\data\jSON"
 
 # Lista para armazenar todos os DataFrames
 dataframes = []
@@ -51,7 +51,7 @@ for filename in os.listdir(LOCAL_STORAGE_PATH):
 data = pd.concat(dataframes, ignore_index=True)
 
 # Salvar os dados tratados em CSV
-output_path = r"D:\NBHelp\noobHelp\venv\data\CSV\match_details_processed.csv"
+output_path = r".\data\CSV\match_details_processed.csv"
 data.to_csv(output_path, index=False)
 
 print(f"Dados processados armazenados em {output_path}")

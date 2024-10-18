@@ -26,13 +26,13 @@ def main():
     capture_duration = 1800  # 30 minutos, ajuste conforme necessário
 
     # Definir os caminhos completos dos scripts
-    path_dados_puuids = r'D:\NBHelp\noobHelp\venv\dados_PUUIDS.py'
-    path_games_request = r'D:\NBHelp\noobHelp\venv\gamesREQUEST.py'
-    path_game_details = r'D:\NBHelp\noobHelp\venv\gameDETAILSrequest.py'
-    path_outliers_treatment = r'D:\NBHelp\noobHelp\venv\outliersTREATMENT.py'
-    path_data_win_results = r'D:\NBHelp\noobHelp\venv\dataWINResults.py'
-    path_data_transformation = r'D:\NBHelp\noobHelp\venv\dataTRANSFORMATION.py'
-    path_model_comparation = r'D:\NBHelp\noobHelp\venv\modelCOMPARATION.py'
+    path_dados_puuids = r'.\ML\dados_PUUIDS.py'
+    path_games_request = r'.\ML\gamesREQUEST.py'
+    path_game_details = r'.\ML\gameDETAILSrequest.py'
+    path_outliers_treatment = r'.\ML\outliersTREATMENT.py'
+    path_data_win_results = r'.\ML\dataWINResults.py'
+    path_data_transformation = r'.\ML\dataTRANSFORMATION.py'
+    path_model_comparation = r'.\ML\modelCOMPARATION.py'
 
     # Passo 1: Coletar novos PUUIDs de jogadores
     run_script(path_dados_puuids)

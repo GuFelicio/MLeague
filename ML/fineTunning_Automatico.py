@@ -11,7 +11,7 @@ import joblib
 import numpy as np
 
 # Carregar os dados
-data = pd.read_csv(r"D:\NBHelp\noobHelp\venv\data\CSV\match_details_transformed.csv")
+data = pd.read_csv(r".\data\CSV\match_details_transformed.csv")
 
 # Feature Engineering: criar novas features
 data['kill_death_ratio'] = data['participant_kills'] / (data['participant_deaths'] + 1)

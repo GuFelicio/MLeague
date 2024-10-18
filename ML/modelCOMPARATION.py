@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 
 # Carregar os dados transformados do CSV
-data_path = r"D:\NBHelp\noobHelp\venv\data\CSV\match_details_transformed.csv"
+data_path = r".\data\CSV\match_details_transformed.csv"
 data = pd.read_csv(data_path)
 
 # Verificar todas as colunas disponíveis no DataFrame
