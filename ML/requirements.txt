@@ -1,0 +1,16 @@
+mysql-connector-python
+requests
+pandas
+beautifulsoup4
+joblib
+scikit-learn
+matplotlib
+seaborn
+xgboost
+lightgbm
+tqdm
+numpy
+hyperopt
+setuptools
+keras
+tensorflow
