@@ -1,12 +1,14 @@
 import requests
 import asyncio
 
-API_KEY = "sua_chave_api_riot"  # Substitua pela sua chave de API da Riot
+
+API_KEY = "RGAPI-a9cc00ac-f232-42b6-8cad-5dc9c4228eb0"  # Substitua pela sua chave de API da Riot
 REQUEST_INTERVAL = 5  # Intervalo de 5 segundos entre as requisições
+PLATFORM_REGION = 'americas'  # Região de plataforma (Spectator API)
 
 # Função para obter dados do jogo atual usando o PUUID do jogador
 async def get_current_game_data(puuid: str):
-    url = f"https://<região>.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{puuid}?api_key={API_KEY}"
+    url = f"https://{PLATFORM_REGION}.api.riotgames.com/lol/spectator/v5/active-games/by-puuid/{puuid}"
 
     try:
         response = requests.get(url)

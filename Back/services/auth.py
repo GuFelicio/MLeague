@@ -4,9 +4,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
-from Back.database import get_db
-from Back.models.user import User
-from Back.schemas.user_schemas import LoginSchema
+from database import get_db
+from models.user import User
+from schemas.user_schemas import LoginSchema
 
 # Configurações para geração de tokens JWT
 SECRET_KEY = "sua_chave_secreta_super_secreta"  

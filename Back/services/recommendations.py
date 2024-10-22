@@ -5,8 +5,8 @@ import pandas as pd
 import asyncio
 
 # Carregar o modelo de Machine Learning treinado
-model = joblib.load("path_para_o_modelo/best_model(2).pkl")  
-scaler = joblib.load("path_para_o_scaler/scaler.pkl")  
+model = joblib.load("D:/ProjetoMLeague/MLeague/data/ML/best_model(NOVO).pkl")
+scaler = joblib.load("D:/ProjetoMLeague/MLeague/data/ML/scaler(NOVO).pkl")
 
 # Função para processar dados de jogo e realizar predições
 def process_game_data(game_data, puuid):
