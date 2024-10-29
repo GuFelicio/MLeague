@@ -14,7 +14,7 @@ LOCAL_STORAGE_PATH = r".\data\jSON"  # Caminho de armazenamento local
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="n45fad9x",
+    password="SENHA PRO BD",
     database="league_data"
 )
 cursor = db.cursor()
