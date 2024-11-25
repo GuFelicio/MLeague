@@ -1,63 +1,105 @@
-Projeto League of Legends - Recomendador de Ações em Tempo Real
-Visão Geral
-Este projeto utiliza Machine Learning para atuar como um coach virtual em partidas de League of Legends, oferecendo recomendações em tempo real com base nos dados coletados durante o jogo. A aplicação captura informações da API da Riot Games e utiliza um modelo de ML para sugerir estratégias ao jogador, auxiliando-o a maximizar as chances de vitória.
 
-Funcionalidades Principais
-Autenticação de Usuário: Login usando o Riot ID e autenticação via JWT.
-Captura de Dados em Tempo Real: Coleta informações sobre os participantes, times e progresso da partida através da API Spectator da Riot.
-Processamento de Dados: Transformação dos dados capturados para o formato necessário pelo modelo de ML.
-Geração de Recomendações: Com base nos dados processados, o modelo de ML sugere ações em tempo real, como focar em dragões, controlar visão ou atacar torres.
-Estrutura do Projeto
-Diretórios Principais
-Back/ - Contém o código backend, com autenticação, captura de dados e geração de recomendações.
-ML/ - Contém o modelo de Machine Learning, incluindo o arquivo treinado e o scaler.
-data/ - Reúne os dados capturados e processados das partidas, usados para treinamento e ajustes do modelo.
-services/ - Módulos para captura de dados da API, transformação de dados e recomendações.
-Arquivos Principais
-auth.py: Autenticação do usuário via JWT, permite o login seguro e acesso às funcionalidades da aplicação.
-recommendations.py: Função para converter as predições do modelo em recomendações compreensíveis para o jogador.
-dataTRANSFORMATION.py: Realiza transformações nos dados para que correspondam ao formato de entrada esperado pelo modelo de ML.
-riot_api.py: Lida com as requisições à API da Riot, incluindo a Spectator API para captura de dados ao vivo.
-modelCOMPARATION.py: Treinamento e validação de diferentes modelos de ML, com o objetivo de otimizar a acurácia nas recomendações.
-Configuração e Instalação
-Clone o repositório para sua máquina local:
-
-bash
+markdown
 Copiar código
-git clone https://github.com/seu-usuario/seu-repositorio.git
-Instale as dependências necessárias listadas em requirements.txt:
+# 🎮 League of Legends Real-Time Game Recommendations 🏆
 
-bash
-Copiar código
+Seja bem-vindo ao **League of Legends Real-Time Game Recommendations**! Este projeto usa **aprendizado de máquina** para oferecer recomendações estratégicas em tempo real durante as partidas de **League of Legends**, ajudando você a maximizar suas chances de vitória. 🚀
+
+---
+
+## 🚀 Funcionalidades
+
+### **Autenticação e Identificação**
+🔑 Login seguro utilizando Riot ID no formato `Nome#Tag`.  
+🛡️ Obtenção do **PUUID** diretamente da API da Riot Games.  
+
+### **Coleta de Dados em Tempo Real**
+📡 Acompanhamento em tempo real das partidas com a **Spectator API**.  
+📊 Coleta de métricas essenciais dos jogadores, times e da partida, incluindo:
+- Abates, assistências, dragões abatidos, barões, torres, entre outros.  
+- Itens comprados, níveis e ouro ganho pelos jogadores.  
+
+### **Recomendações Estratégicas Baseadas em IA**
+🧠 Machine Learning gera recomendações em tempo real, como:
+- Atacar objetivos prioritários (Barão, Dragões, Torres).  
+- Melhorar o farm ou visão.  
+- Ajustar estratégias de combate conforme o andamento do jogo.  
+
+---
+
+## 🔧 Tecnologias Utilizadas
+
+### **Backend**
+- **Python 🐍**: Linguagem principal do projeto.  
+- **FastAPI ⚡**: Framework para APIs rápidas e eficientes.  
+- **Riot Games API 🎮**: Coleta de dados diretamente das partidas.  
+
+### **Machine Learning**
+- **Scikit-Learn 🤖**: Modelos de classificação e predição.  
+- **Random Forest 🌲, Gradient Boosting 🔥, e SVM** para análise de padrões de jogo.  
+- **Predição e Classificação**: As ações recomendadas são baseadas no histórico de dados tratados e normalizados.  
+
+### **Outros**
+- **Pandas e NumPy 📊**: Para preparação e manipulação dos dados.  
+- **JSON 📂**: Estrutura de armazenamento para análise futura.  
+
+---
+
+## 📈 Modelos Utilizados e Resultados
+
+| Modelo                | Acurácia        | Observações                      |
+|------------------------|-----------------|----------------------------------|
+| **Random Forest**      | 83%            | Excelente para predição geral.  |
+| **Gradient Boosting**  | 83%            | Bom equilíbrio entre precisão e recall.  |
+| **SVM**                | 85%            | Melhor acurácia para classificação. |
+
+> **Conclusão**: A abordagem de **ensemble** foi adotada para maior robustez e consistência nos resultados.  
+
+---
+
+## 🎮 Como Usar
+
+### **Pré-requisitos**
+- Instale as dependências:  
+```bash
 pip install -r requirements.txt
-Configure a variável de ambiente com a sua chave de API da Riot Games:
+Execução Inicial
+Obtenha sua chave de API da Riot Games em Riot Developer Portal.
+Adicione sua chave de API no arquivo de configuração.
+Coleta de Dados em Tempo Real
+Para iniciar a coleta:
 
-Altere API_KEY nos scripts para a sua chave obtida em Riot Developer Portal.
-Endpoints e Funcionamento
-1. Autenticação de Usuário
-Rota: /token
-Método: POST
-Entrada: username e password
-Saída: Token JWT para autenticação.
-2. Captura de Dados da Partida
-Rota: /game/current
-Método: GET
-Entrada: PUUID do jogador
-Saída: Dados em tempo real da partida.
-3. Geração de Recomendações
-Rota: /recommendations
-Método: POST
-Entrada: Dados processados da partida
-Saída: Sugestões de ações para o jogador.
-Fluxo Completo
-Login: O jogador entra com seu Riot ID e recebe um token JWT.
-Captura do PUUID: O backend obtém o PUUID do jogador via API da Riot.
-Captura de Dados em Tempo Real: Durante o jogo, o backend captura dados ao vivo da Spectator API.
-Geração de Recomendações: Os dados são processados e usados pelo modelo de ML para fornecer recomendações em tempo real ao jogador.
-Modelo de Machine Learning
-O modelo foi treinado para prever ações estratégicas durante a partida, como atacar dragões, controlar visão, ou focar em torres. As features utilizadas incluem:
+bash
+Copiar código
+python src/capture_game_data.py
+Digite o Riot ID e acompanhe o progresso.
 
-Estatísticas do Jogador: Abates, mortes, assistências, ouro ganho, nível do campeão, etc.
-Objetivos de Time: Barões, dragões, torres, inibidores.
-Duração da Partida: Tempo decorrido, modo de jogo e tipo de partida.
-A aplicação atualmente usa um ensemble de modelos, sendo os mais eficazes o Random Forest e o Gradient Boosting, com um SVM de apoio.
+Recomendações em Tempo Real
+Após capturar os dados:
+
+bash
+Copiar código
+python src/run_recommendations.py
+Receba dicas estratégicas baseadas na análise da partida!
+
+📁 Estrutura do Projeto
+bash
+Copiar código
+📦 League of Legends Recommendations
+├── 📂 src/
+│   ├── auth.py             # Módulo de autenticação.
+│   ├── riot_api.py         # Interação com a Riot API.
+│   ├── data_processing/    # Scripts de normalização e transformação.
+│   ├── recommendations/    # Geração de recomendações baseadas em ML.
+├── 📂 data/
+│   ├── raw/                # Dados brutos capturados das APIs.
+│   ├── processed/          # Dados tratados para análise.
+├── 📂 models/
+│   ├── best_model.pkl      # Modelo treinado para recomendações.
+│   ├── scaler.pkl          # Scaler para normalização.
+├── requirements.txt        # Dependências do projeto.
+└── README.md               # Documentação do projeto.
+🌟 Diferenciais do Projeto
+Interatividade: As recomendações são geradas em tempo real com base na situação atual da partida.
+Adaptabilidade: Utilização de IA para identificar padrões e ajustar estratégias.
+Escalabilidade: O sistema pode ser facilmente integrado a outras ferramentas, como aplicativos mobile.****
